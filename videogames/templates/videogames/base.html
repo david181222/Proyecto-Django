@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Videogames{% endblock %}</title>
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+</head>
+<body class="bg-cyber-dark min-h-screen text-gray-100">
+    <nav class="bg-cyber-gray border-b-2 border-cyber-yellow">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <a href="{% url 'videogame' %}" class="font-cyber text-2xl text-cyber-yellow neon-yellow hover:text-cyber-cyan transition-colors">
+                VIDEOGAMES
+            </a>
+        </div>
+    </nav>
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

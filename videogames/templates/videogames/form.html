@@ -1,0 +1,57 @@
+{% extends 'videogames/base.html' %}
+
+{% block title %}{% if videogame %}Editar{% else %}Nuevo{% endif %} Videojuego{% endblock %}
+
+{% block content %}
+<div class="max-w-xl">
+    <p class="font-cyber text-cyber-yellow text-sm mb-2"> - {% if videogame %}MODIFICAR REGISTRO{% else %}NUEVO REGISTRO{% endif %}</p>
+    <h1 class="font-cyber text-3xl text-cyber-cyan neon-cyan mb-6">
+        {% if videogame %}EDITAR{% else %}CREAR{% endif %} VIDEOJUEGO
+    </h1>
+
+    {% if error %}
+    <div class="bg-red-900/50 border-l-4 border-cyber-pink p-4 mb-6">
+        <p class="font-cyber text-cyber-pink text-sm">ERROR!</p>
+        <p class="text-white">{{ error }}</p>
+    </div>
+    {% endif %}
+
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        <div>
+            <label for="title" class="block font-cyber text-xs text-cyber-yellow mb-2">TÍTULO</label>
+            <input type="text" id="title" name="title"
+                   value="{% firstof form_data.title videogame.title '' %}"
+                   class="w-full bg-cyber-gray border-2 border-gray-600 px-4 py-3 text-white focus:border-cyber-cyan focus:outline-none transition-colors"
+                   required>
+        </div>
+
+        <div>
+            <label for="description" class="block font-cyber text-xs text-cyber-yellow mb-2">DESCRIPCIÓN</label>
+            <textarea id="description" name="description" rows="4"
+                      class="w-full bg-cyber-gray border-2 border-gray-600 px-4 py-3 text-white focus:border-cyber-cyan focus:outline-none transition-colors resize-none"
+                      required>{% firstof form_data.description videogame.description '' %}</textarea>
+        </div>
+
+        <div>
+            <label for="launch_date" class="block font-cyber text-xs text-cyber-yellow mb-2">FECHA DE LANZAMIENTO</label>
+            <input type="date" id="launch_date" name="launch_date"
+                   value="{% if form_data.launch_date %}{{ form_data.launch_date }}{% elif videogame %}{{ videogame.launch_date|date:'Y-m-d' }}{% endif %}"
+                   class="w-full bg-cyber-gray border-2 border-gray-600 px-4 py-3 text-white focus:border-cyber-cyan focus:outline-none transition-colors"
+                   required>
+        </div>
+
+        <div class="flex gap-4 pt-4">
+            <button type="submit"
+                    class="font-cyber bg-cyber-yellow text-cyber-dark px-8 py-3 hover:bg-cyber-cyan transition-colors">
+                GUARDAR
+            </button>
+            <a href="{% url 'videogame' %}"
+               class="font-cyber border-2 border-gray-600 text-gray-400 px-8 py-3 hover:border-cyber-pink hover:text-cyber-pink transition-colors">
+                CANCELAR
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

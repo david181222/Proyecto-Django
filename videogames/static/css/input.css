@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* Configuracion de colores personalizados Cyberpunk */
+@theme {
+    --color-cyber-yellow: #F7FF00;
+    --color-cyber-cyan: #00F0FF;
+    --color-cyber-pink: #FF2A6D;
+    --color-cyber-dark: #0D0D0D;
+    --color-cyber-gray: #1A1A2E;
+}
+
+/* Fuente Cyberpunk */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+.font-cyber {
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Efectos neon */
+.neon-yellow {
+    text-shadow: 0 0 10px #F7FF00, 0 0 20px #F7FF00;
+}
+
+.neon-cyan {
+    text-shadow: 0 0 10px #00F0FF, 0 0 20px #00F0FF;
+}
