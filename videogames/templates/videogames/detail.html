@@ -1,0 +1,35 @@
+{% extends 'videogames/base.html' %}
+
+{% block title %}{{ videogame.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl">
+    <p class="font-cyber text-cyber-yellow text-sm mb-2">// DETALLES DEL JUEGO</p>
+    <h1 class="font-cyber text-4xl text-cyber-cyan neon-cyan mb-4">{{ videogame.title }}</h1>
+
+    <div class="bg-cyber-gray border-l-4 border-cyber-yellow p-6 mb-6">
+        <p class="font-cyber text-xs text-cyber-yellow mb-2">FECHA DE LANZAMIENTO</p>
+        <p class="text-xl">{{ videogame.launch_date }}</p>
+    </div>
+
+    <div class="bg-cyber-gray border-l-4 border-cyber-cyan p-6 mb-8">
+        <p class="font-cyber text-xs text-cyber-cyan mb-2">DESCRIPCION</p>
+        <p class="text-gray-300 leading-relaxed">{{ videogame.description }}</p>
+    </div>
+
+    <div class="flex gap-4">
+        <a href="{% url 'videogame_update' videogame.pk %}"
+           class="font-cyber bg-cyber-cyan text-cyber-dark px-6 py-2 hover:bg-cyber-yellow transition-colors">
+            EDITAR
+        </a>
+        <a href="{% url 'videogame_delete' videogame.pk %}"
+           class="font-cyber bg-cyber-pink text-white px-6 py-2 hover:bg-red-600 transition-colors">
+            ELIMINAR
+        </a>
+        <a href="{% url 'videogame_list' %}"
+           class="font-cyber border-2 border-gray-600 text-gray-400 px-6 py-2 hover:border-cyber-yellow hover:text-cyber-yellow transition-colors">
+            VOLVER
+        </a>
+    </div>
+</div>
+{% endblock %}

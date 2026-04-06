@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Videogame
 
 
+def videogame_list(request):
+    videogames = Videogame.objects.all()
+    return render(request, 'videogames/list.html', {'videogames': videogames})
+
+
 def videogame_detail(request, pk):
     videogame = get_object_or_404(Videogame, pk=pk)
     return render(request, 'videogames/detail.html', {'videogame': videogame})
@@ -55,3 +60,11 @@ def videogame_update(request, pk):
     return render(request, 'videogames/form.html', {'videogame': videogame})
 
 
+def videogame_delete(request, pk):
+    videogame = get_object_or_404(Videogame, pk=pk)
+    # DELETE usa POST en Django tradicional porque los formularios HTML
+    # solo soportan GET y POST de forma nativa
+    if request.method == 'POST':
+        videogame.delete()
+        return redirect('videogame_list')
+    return render(request, 'videogames/confirm_delete.html', {'videogame': videogame})

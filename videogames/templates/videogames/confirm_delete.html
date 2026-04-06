@@ -1,0 +1,28 @@
+{% extends 'videogames/base.html' %}
+
+{% block title %}Eliminar {{ videogame.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-xl">
+    <p class="font-cyber text-cyber-pink text-sm mb-2">// ADVERTENCIA</p>
+    <h1 class="font-cyber text-3xl text-cyber-pink mb-6">ELIMINAR REGISTRO</h1>
+
+    <div class="bg-red-900/30 border-2 border-cyber-pink p-6 mb-8">
+        <p class="text-gray-300 mb-2">Estas a punto de eliminar:</p>
+        <p class="font-cyber text-2xl text-white">{{ videogame.title }}</p>
+        <p class="text-gray-500 mt-4 text-sm">Esta accion no se puede deshacer.</p>
+    </div>
+
+    <form method="post" class="flex gap-4">
+        {% csrf_token %}
+        <button type="submit"
+                class="font-cyber bg-cyber-pink text-white px-8 py-3 hover:bg-red-600 transition-colors">
+            CONFIRMAR
+        </button>
+        <a href="{% url 'videogame_list' %}"
+           class="font-cyber border-2 border-gray-600 text-gray-400 px-8 py-3 hover:border-cyber-cyan hover:text-cyber-cyan transition-colors">
+            CANCELAR
+        </a>
+    </form>
+</div>
+{% endblock %}
