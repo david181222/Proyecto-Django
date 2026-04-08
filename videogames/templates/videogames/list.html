@@ -3,53 +3,48 @@
 {% block title %}Lista de Videojuegos{% endblock %}
 
 {% block content %}
-<div class="flex justify-between items-center mb-8">
-    <h1 class="font-cyber text-3xl text-cyber-cyan neon-cyan">BIBLIOTECA</h1>
-    <a href="{% url 'videogame_create' %}"
-       class="font-cyber bg-cyber-yellow text-cyber-dark px-6 py-2 hover:bg-cyber-cyan transition-colors">
-        + NUEVO
-    </a>
+<section class="hero-scan hud-card js-reveal mb-4 p-5 sm:p-6">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+            <p class="hud-label">Terminal Index</p>
+            <h1 class="glitch-title mt-2 text-2xl font-bold tracking-[0.18em] text-[#00f0ff] sm:text-3xl">Be a legend Night City</h1>
+            <p class="mt-3 max-w-2xl text-sm text-[#00f0ff]/75">Crudea videojuegos aquí.</p>
+        </div>
+        <a href="{% url 'videogame_create' %}" class="hud-btn hud-btn-primary">Agregar videojuego</a>
+    </div>
+</section>
+
+<div class="js-reveal mb-5 flex items-center gap-2 text-[11px] uppercase tracking-[0.28em] text-[#f5e642]">
+    <span class="blink-cursor">▮</span>
+    <span>{{ videogames|length|stringformat:"03d" }} VIDEOGAMES</span>
 </div>
 
 {% if videogames %}
-<div class="overflow-x-auto">
-    <table class="w-full">
-        <thead>
-            <tr class="border-b-2 border-cyber-yellow">
-                <th class="font-cyber text-left py-3 text-cyber-yellow">TITULO</th>
-                <th class="font-cyber text-left py-3 text-cyber-yellow">LANZAMIENTO</th>
-                <th class="font-cyber text-right py-3 text-cyber-yellow">ACCIONES</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for vg in videogames %}
-            <tr class="border-b border-cyber-gray hover:bg-cyber-gray transition-colors">
-                <td class="py-4">
-                    <a href="{% url 'videogame_detail' vg.pk %}"
-                       class="text-cyber-cyan hover:text-cyber-yellow transition-colors">
-                        {{ vg.title }}
-                    </a>
-                </td>
-                <td class="py-4 text-gray-400">{{ vg.launch_date }}</td>
-                <td class="py-4 text-right space-x-2">
-                    <a href="{% url 'videogame_update' vg.pk %}"
-                       class="font-cyber text-sm bg-cyber-cyan text-cyber-dark px-4 py-1 hover:bg-cyber-yellow transition-colors">
-                        EDITAR
-                    </a>
-                    <a href="{% url 'videogame_delete' vg.pk %}"
-                       class="font-cyber text-sm bg-cyber-pink text-white px-4 py-1 hover:bg-red-600 transition-colors">
-                        ELIMINAR
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="masonry-grid">
+    {% for vg in videogames %}
+    <article class="masonry-item hud-card js-reveal p-4">
+        <div>
+            <p class="hud-label">Lanzamiento: {{ vg.launch_date|date:"Y-m-d" }}</p>
+            <h2 class="glitch-title mt-2 text-lg font-bold tracking-[0.08em] text-[#00f0ff]">
+                <a href="{% url 'videogame_detail' vg.pk %}">{{ vg.title }}</a>
+            </h2>
+            <span class="sys-id">ID: 0x{{ vg.id|stringformat:"04X" }}</span>
+            <p class="mt-4 text-sm leading-relaxed text-[#00f0ff]/70">{{ vg.description|truncatewords:24 }}</p>
+        </div>
+        <div class="mt-5 flex flex-wrap gap-2">
+            <a href="{% url 'videogame_detail' vg.pk %}" class="hud-btn hud-btn-primary">Ver</a>
+            <a href="{% url 'videogame_update' vg.pk %}" class="hud-btn hud-btn-alert">Editar</a>
+            <a href="{% url 'videogame_delete' vg.pk %}" class="hud-btn hud-btn-danger">Eliminar</a>
+        </div>
+    </article>
+    {% endfor %}
 </div>
 {% else %}
-<div class="text-center py-16 border-2 border-dashed border-cyber-gray">
-    <p class="font-cyber text-gray-500">NO HAY VIDEOJUEGOS REGISTRADOS</p>
-    <p class="text-gray-600 mt-2">Agrega el primero usando el boton + NUEVO</p>
-</div>
+<section class="hud-card js-reveal p-7 text-center">
+    <p class="hud-label">No Data</p>
+    <h2 class="mt-3 text-xl font-bold tracking-[0.12em] text-[#f5e642]">SIN VIDEOGAMES, ANDA A COMPRAR</h2>
+    <p class="mx-auto mt-2 max-w-2xl text-sm text-[#00f0ff]/70">Crea un primer registro</p>
+    <a href="{% url 'videogame_create' %}" class="hud-btn hud-btn-primary mt-5">Agregar videojuego</a>
+</section>
 {% endif %}
 {% endblock %}

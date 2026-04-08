@@ -3,26 +3,23 @@
 {% block title %}Eliminar {{ videogame.title }}{% endblock %}
 
 {% block content %}
-<div class="max-w-xl">
-    <p class="font-cyber text-cyber-pink text-sm mb-2">// ADVERTENCIA</p>
-    <h1 class="font-cyber text-3xl text-cyber-pink mb-6">ELIMINAR REGISTRO</h1>
+<section class="mx-auto max-w-3xl space-y-4">
+    <header class="hero-scan hud-card js-reveal border-[#ff2d6b]/60 p-6">
+        <p class="hud-label text-[#ff2d6b]">Delete Protocol</p>
+        <h1 class="glitch-title mt-2 text-2xl font-bold tracking-[0.14em] text-[#ff2d6b]">CONFIRMAR ELIMINACIÓN</h1>
+        <p class="mt-3 text-sm text-[#00f0ff]/75">Esta operación es definitiva!.</p>
+    </header>
 
-    <div class="bg-red-900/30 border-2 border-cyber-pink p-6 mb-8">
-        <p class="text-gray-300 mb-2">Estas a punto de eliminar:</p>
-        <p class="font-cyber text-2xl text-white">{{ videogame.title }}</p>
-        <p class="text-gray-500 mt-4 text-sm">Esta accion no se puede deshacer.</p>
+    <div class="hud-card js-reveal p-5">
+        <p class="hud-label">Registro seleccionado</p>
+        <p class="mt-2 text-lg font-bold tracking-[0.1em] text-[#00f0ff]">{{ videogame.title }}</p>
+        <span class="sys-id">SYS_ID: 0x{{ videogame.id|stringformat:"04X" }}</span>
     </div>
 
-    <form method="post" class="flex gap-4">
+    <form method="post" class="js-reveal flex flex-wrap gap-2">
         {% csrf_token %}
-        <button type="submit"
-                class="font-cyber bg-cyber-pink text-white px-8 py-3 hover:bg-red-600 transition-colors">
-            CONFIRMAR
-        </button>
-        <a href="{% url 'videogame_list' %}"
-           class="font-cyber border-2 border-gray-600 text-gray-400 px-8 py-3 hover:border-cyber-cyan hover:text-cyber-cyan transition-colors">
-            CANCELAR
-        </a>
+        <button type="submit" class="hud-btn hud-btn-danger">Sí, destruir</button>
+        <a href="{% url 'videogame_list' %}" class="hud-btn hud-btn-primary">Cancelar</a>
     </form>
-</div>
+</section>
 {% endblock %}

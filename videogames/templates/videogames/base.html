@@ -6,17 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Videogames{% endblock %}</title>
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-cyber-dark min-h-screen text-gray-100">
-    <nav class="bg-cyber-gray border-b-2 border-cyber-yellow">
-        <div class="max-w-6xl mx-auto px-4 py-4">
-            <a href="{% url 'videogame_list' %}" class="font-cyber text-2xl text-cyber-yellow neon-yellow hover:text-cyber-cyan transition-colors">
-                VIDEOGAMES
-            </a>
+<body>
+    <div class="hud-shell">
+        <aside class="hud-sidebar" aria-hidden="true">
+            <span class="hud-sidebar-text">CYBER / CRUD / DJANGO</span>
+        </aside>
+
+        <div class="hud-main">
+            <nav class="hud-topbar">
+                <div class="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+                    <a href="{% url 'videogame_list' %}" class="glitch-title text-[18px] font-bold tracking-[0.24em] text-[#00f0ff]">
+                        VIDEOGAMES CENTER
+                    </a>
+                    <a href="{% url 'videogame_create' %}" class="hud-btn hud-btn-alert">+ Nuevo Registro</a>
+                </div>
+            </nav>
+
+            <main class="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:py-8">
+                {% block content %}{% endblock %}
+            </main>
         </div>
-    </nav>
-    <main class="max-w-6xl mx-auto px-4 py-8">
-        {% block content %}{% endblock %}
-    </main>
+    </div>
+
+    {% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const revealItems = document.querySelectorAll('.js-reveal');
+            revealItems.forEach(function (el, index) {
+                setTimeout(function () {
+                    el.classList.add('reveal-in');
+                }, index * 40);
+            });
+        });
+    </script>
+    {% endblock %}
 </body>
 </html>

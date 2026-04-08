@@ -1,26 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap');
 @import "tailwindcss";
 
-/* Configuracion de colores personalizados Cyberpunk */
-@theme {
-    --color-cyber-yellow: #F7FF00;
-    --color-cyber-cyan: #00F0FF;
-    --color-cyber-pink: #FF2A6D;
-    --color-cyber-dark: #0D0D0D;
-    --color-cyber-gray: #1A1A2E;
+@source "../../templates/**/*.html";
+
+@layer base {
+    :root {
+        --cp-base: #0d0d0f;
+        --cp-cyan: #00f0ff;
+        --cp-yellow: #f5e642;
+        --cp-danger: #ff2d6b;
+        --cp-surface: #1a1a2e;
+    }
+
+    body {
+        background: var(--cp-base);
+        color: var(--cp-cyan);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
 }
 
-/* Fuente Cyberpunk */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+@layer components {
+    .hud-shell {
+        min-height: 100vh;
+        padding-left: 24px;
+    }
 
-.font-cyber {
-    font-family: 'Orbitron', sans-serif;
+    .hud-sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: 24px;
+        border-right: 1px solid rgba(0, 240, 255, 0.35);
+        background: #09090b;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hud-sidebar-text {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(245, 230, 66, 0.9);
+    }
+
+    .hud-main {
+        min-height: 100vh;
+        background-image: radial-gradient(circle at 20% -10%, rgba(0, 240, 255, 0.08), transparent 30%);
+    }
+
+    .hud-topbar {
+        border-bottom: 1px solid rgba(0, 240, 255, 0.35);
+        background: rgba(13, 13, 15, 0.95);
+    }
+
+    .hud-label {
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--cp-yellow);
+    }
+
+    .hud-card {
+        position: relative;
+        background: var(--cp-surface);
+        border: 1px solid rgba(0, 240, 255, 0.35);
+        clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+    }
+
+    .hud-card::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        pointer-events: none;
+        opacity: 0;
+        padding: 1px;
+        clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+        background: linear-gradient(90deg, transparent 0%, rgba(0, 240, 255, 0.95) 45%, transparent 100%);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        transform-origin: center;
+    }
+
+    .hud-card:hover::after {
+        opacity: 1;
+        animation: border-spin 1.2s linear infinite;
+    }
+
+    .hero-scan {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-scan::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.04;
+        background: repeating-linear-gradient(
+            transparent 0px,
+            transparent 1px,
+            rgba(0, 0, 0, 0.06) 1px,
+            rgba(0, 0, 0, 0.06) 2px
+        );
+    }
+
+    .glitch-title {
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    .glitch-title:hover {
+        animation: glitch 120ms steps(2, end) 1;
+    }
+
+    .sys-id {
+        display: block;
+        margin-top: 4px;
+        font-size: 9px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(0, 240, 255, 0.5);
+    }
+
+    .masonry-grid {
+        column-gap: 12px;
+        column-count: 1;
+    }
+
+    .masonry-item {
+        break-inside: avoid;
+        margin-bottom: 12px;
+    }
+
+    .hud-btn {
+        display: inline-block;
+        border: 1px solid currentColor;
+        background: transparent;
+        color: var(--cp-cyan);
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 11px;
+        padding: 10px 14px;
+        clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
+        line-height: 1;
+    }
+
+    .hud-btn:hover {
+        transform: skewX(-1deg);
+    }
+
+    .hud-btn-primary {
+        color: var(--cp-cyan);
+        border-color: var(--cp-cyan);
+    }
+
+    .hud-btn-primary:hover {
+        background: rgba(0, 240, 255, 0.12);
+    }
+
+    .hud-btn-alert {
+        color: var(--cp-yellow);
+        border-color: var(--cp-yellow);
+    }
+
+    .hud-btn-alert:hover {
+        background: rgba(245, 230, 66, 0.12);
+    }
+
+    .hud-btn-danger {
+        color: var(--cp-danger);
+        border-color: var(--cp-danger);
+    }
+
+    .hud-btn-danger:hover {
+        background: rgba(255, 45, 107, 0.12);
+    }
+
+    .django-form input,
+    .django-form select,
+    .django-form textarea {
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid var(--cp-cyan);
+        border-radius: 0;
+        background: transparent;
+        padding: 10px 2px;
+        color: var(--cp-cyan);
+        box-shadow: none;
+        outline: none;
+        caret-color: var(--cp-cyan);
+    }
+
+    .django-form input:focus,
+    .django-form select:focus,
+    .django-form textarea:focus {
+        border-bottom-color: var(--cp-yellow);
+        animation: caret-flicker 1s steps(2, end) infinite;
+    }
+
+    .terminal-overlay {
+        background: rgba(13, 13, 15, 0.92);
+        border: 1px solid rgba(0, 240, 255, 0.45);
+        clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+        min-height: calc(100vh - 140px);
+    }
+
+    .js-reveal {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    .js-reveal.reveal-in {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 120ms linear, transform 120ms linear;
+    }
 }
 
-/* Efectos neon */
-.neon-yellow {
-    text-shadow: 0 0 10px #F7FF00, 0 0 20px #F7FF00;
+@layer utilities {
+    .blink-cursor {
+        animation: blink 1s step-end infinite;
+    }
 }
 
-.neon-cyan {
-    text-shadow: 0 0 10px #00F0FF, 0 0 20px #00F0FF;
+@keyframes glitch {
+    0% {
+        text-shadow: -1px 0 0 var(--cp-danger), 1px 0 0 var(--cp-cyan);
+    }
+    100% {
+        text-shadow: 1px 0 0 var(--cp-danger), -1px 0 0 var(--cp-cyan);
+    }
+}
+
+@keyframes border-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes blink {
+    0%,
+    49% {
+        opacity: 1;
+    }
+    50%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes caret-flicker {
+    0%,
+    49% {
+        caret-color: var(--cp-cyan);
+    }
+    50%,
+    100% {
+        caret-color: transparent;
+    }
+}
+
+@media (min-width: 768px) {
+    .masonry-grid {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 1200px) {
+    .masonry-grid {
+        column-count: 3;
+    }
 }
